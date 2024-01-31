@@ -1,0 +1,10 @@
+type Products @extends @key(fields:"id"){
+    id:ID!@external
+    productDetails : [ProductDetails]
+    name : String
+}
+type ProductDetails {
+  id: ID!
+  description: String
+  category: String
+ }
