@@ -14,13 +14,16 @@ import java.util.concurrent.CompletableFuture;
 
 class ProductReviewService implements ServiceProvider {
 
-     String filePath1 = "src/main/resources/Reviews.graphql";
+    String filePath1 = "src/main/resources/Reviews.graphql";
+    String filePath2 = "src/main/resources/resolverSchema.graphql";
 
     public  final String schema;
+    public  final String resolverSchema;
 
     {
         try {
             schema = readFileAsString(filePath1);
+            resolverSchema = readFileAsString(filePath2);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -31,7 +34,7 @@ class ProductReviewService implements ServiceProvider {
     public String getNameSpace() { return "PERSON_ADDRESS";}
 
     @Override
-    public Map<String, String> sdlFiles() { return ImmutableMap.of("schema.graphqls", schema);}
+    public Map<String, String> sdlFiles() { return ImmutableMap.of("schema.graphqls", schema, "resolver.graphqls", resolverSchema);}
 
     @Override
     public ServiceType getSeviceType() {
@@ -39,13 +42,12 @@ class ProductReviewService implements ServiceProvider {
     }
 
     @Override
-    public CompletableFuture<Map<String, Object>> query(final ExecutionInput executionInput,
-                                                        final GraphQLContext context) {
-
-        Map<String, Object> data = ImmutableMap
-                .of("data", ImmutableMap.of("product", ImmutableMap.of("address", ImmutableMap.of("id",2 , "text","CA", "starRating",2))));
-        System.out.println(data);
-        return CompletableFuture.completedFuture(data);
+    public CompletableFuture<Map<String, Object>> query (final ExecutionInput executionInput, final GraphQLContext context) {
+//        Map<String, Object> data = ImmutableMap
+//                .of("data", ImmutableMap.of("product", ImmutableMap.of("address", ImmutableMap.of("id",2 , "text","CA", "starRating",2))));
+//        System.out.println(data);
+//        return CompletableFuture.completedFuture(data);
+        return null;
 
     }
 

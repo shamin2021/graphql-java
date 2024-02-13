@@ -42,9 +42,9 @@ class ProductNameService implements ServiceProvider {
     @Override
     public CompletableFuture<Map<String, Object>> query(final ExecutionInput executionInput,
                                                         final GraphQLContext context) {
-        Map<String, Object> data = ImmutableMap.of("product", ImmutableMap.of("id", 1, "name", "Java","description","hjsaj"));
-        System.out.println(data);
-        return CompletableFuture.completedFuture(data);
+//        Map<String, Object> data = ImmutableMap.of("data", ImmutableMap.of("product", ImmutableMap.of("id", 1, "name", "Java","description","hjsaj")));
+//        return CompletableFuture.completedFuture(data);
+        return null;
     }
 
     public static String readFileAsString(String filePath) throws Exception {

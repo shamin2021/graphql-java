@@ -1,0 +1,12 @@
+extend type Foo {
+    bar : Bar @resolver(field: 'getBar' arguments: [{name : 'barId', value: '$id'}])
+}
+
+type Bar{}
+
+directive @resolver(field: String, arguments: [ResolverArgument!]) on FIELD_DEFINITION
+
+input ResolverArgument {
+    name : String!
+    value : String!
+}

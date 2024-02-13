@@ -38,15 +38,15 @@ public class Test {
         GraphQLOrchestrator graphQLOrchestrator = GraphQLOrchestrator.newOrchestrator()
                 .runtimeGraph(runtimeGraph).build();
 
-//        // Print SDL of supergraph
-//        String grastrator = new SchemaPrinter().print(graphQLOrchestrator.getSchema());
-//        System.out.println(grastrator);
+        // Print SDL of supergraph
+        String grastrator = new SchemaPrinter().print(graphQLOrchestrator.getSchema());
+        System.out.println(grastrator);
 
         //Execute the query
         CompletableFuture<ExecutionResult> execute = graphQLOrchestrator
                 .execute(
                         ExecutionInput.newExecutionInput()
-                                .query("query { product (id:1) { id } }")
+                                .query( "query { getBar (barId: \"1\"){id} }")
                                 .build()
                 );
 
