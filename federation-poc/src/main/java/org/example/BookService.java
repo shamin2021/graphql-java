@@ -1,5 +1,4 @@
 package org.example;
-
 import com.google.common.collect.ImmutableMap;
 import com.intuit.graphql.orchestrator.ServiceProvider;
 import graphql.ExecutionInput;
@@ -9,25 +8,24 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-class ProductNameService implements ServiceProvider {
+public class BookService implements ServiceProvider {
 
-    String filePath1 = "src/main/resources/Product.graphql";
-    public String schema;
+    String filePath1 = "src/main/resources/BookSchema.graphqls";
+
+    public String bookSchema;
     {
         try {
-            schema = readFileAsString(filePath1);
+            bookSchema = readFileAsString(filePath1);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public String getNameSpace() { return "PRODUCT"; }
+    public String getNameSpace() { return "bookService"; }
 
     @Override
     public ServiceType getSeviceType() {
@@ -35,14 +33,16 @@ class ProductNameService implements ServiceProvider {
     }
 
     @Override
-    public Map<String, String> sdlFiles() { return ImmutableMap.of("schema.graphqls", schema); }
+    public Map<String, String> sdlFiles() { return ImmutableMap.of("schema.graphqls", bookSchema); }
 
     @Override
     public CompletableFuture<Map<String, Object>> query(final ExecutionInput executionInput,
                                                         final GraphQLContext context) {
         Map<String, Object> data = ImmutableMap
-                .of("data", ImmutableMap.of("foo", ImmutableMap.of("getBar", ImmutableMap.of("id", "bar","barName","hi"))));
-        System.out.println("PRODUCT_QUERY");
+                .of("data", ImmutableMap.of("bookById", ImmutableMap.of("id", "book-1","name","GraphQuilt: The future of Schema Stitching","pageCount","100","author", ImmutableMap.of(
+                        "id", "author-1"
+                ))));
+        System.out.println("BOOK_QUERY");
 
         System.out.println(data);
         return CompletableFuture.completedFuture(data);

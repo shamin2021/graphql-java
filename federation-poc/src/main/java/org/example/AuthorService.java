@@ -9,25 +9,27 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-class ProductNameService implements ServiceProvider {
+public class AuthorService implements ServiceProvider {
 
-    String filePath1 = "src/main/resources/Product.graphql";
-    public String schema;
+    String filePath1 = "src/main/resources/AuthorSchema.graphqls";
+
+    public String authorSchema;
     {
         try {
-            schema = readFileAsString(filePath1);
+            authorSchema = readFileAsString(filePath1);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public String getNameSpace() { return "PRODUCT"; }
+    public String getNameSpace() { return "authorService"; }
 
     @Override
     public ServiceType getSeviceType() {
@@ -35,18 +37,27 @@ class ProductNameService implements ServiceProvider {
     }
 
     @Override
-    public Map<String, String> sdlFiles() { return ImmutableMap.of("schema.graphqls", schema); }
+    public Map<String, String> sdlFiles() { return ImmutableMap.of("schema.graphqls", authorSchema); }
 
     @Override
     public CompletableFuture<Map<String, Object>> query(final ExecutionInput executionInput,
                                                         final GraphQLContext context) {
-        Map<String, Object> data = ImmutableMap
-                .of("data", ImmutableMap.of("foo", ImmutableMap.of("getBar", ImmutableMap.of("id", "bar","barName","hi"))));
-        System.out.println("PRODUCT_QUERY");
+        // Simulate author response
+        List<Map<String, Object>> entities = new ArrayList<>();
+        Map<String, Object> entity = new HashMap<>();
+        entity.put("firstName", "Charles");
+        entity.put("lastName", "Dickens");
+        entities.add(entity);
 
+        Map<String, Object> data = ImmutableMap.of(
+                "data", ImmutableMap.of(
+                        "_entities", entities
+                )
+        );
+
+        System.out.println("AUTHOR_QUERY");
         System.out.println(data);
         return CompletableFuture.completedFuture(data);
-        //return null;
     }
 
     public static String readFileAsString(String filePath) throws Exception {

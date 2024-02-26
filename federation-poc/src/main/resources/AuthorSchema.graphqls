@@ -1,0 +1,9 @@
+type Query {
+    authorByid(id: ID!): Author
+}
+
+type Author @extends @key(fields: "id") {
+    id: String @external
+    firstName: String!
+    lastName: String!
+}
