@@ -1,0 +1,13 @@
+type Query {
+}
+
+type Person @key(fields: "firstName") @extends {
+    firstName: String @external
+    address : [Address]
+}
+
+type Address {
+    city: String
+    state: String
+    zip: String
+}

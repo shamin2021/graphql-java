@@ -1,0 +1,12 @@
+type Query {
+    getPersons : [Person]
+    getPersonById(firstName: String ): Person
+}
+
+type Person @key(fields: "firstName") {
+    firstName : String
+    lastName: String
+    age: Int
+    isMarried: Boolean
+    isAlive: Boolean
+}
